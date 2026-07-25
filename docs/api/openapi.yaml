@@ -1,0 +1,24 @@
+openapi: 3.1.0
+info:
+  title: auth_api
+  version: 0.1.0
+paths:
+  /api/v1/health:
+    get:
+      operationId: getHealth
+      tags: [health]
+      responses:
+        "200":
+          description: Processo ativo
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, service]
+                properties:
+                  status:
+                    type: string
+                    const: ok
+                  service:
+                    type: string
+                    const: auth_api

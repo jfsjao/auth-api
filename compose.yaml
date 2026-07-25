@@ -1,0 +1,57 @@
+services:
+  api:
+    build:
+      context: .
+      target: runtime
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: ${PORT:-3000}
+      API_PREFIX: ${API_PREFIX:-api}
+      API_VERSION: ${API_VERSION:-1}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://auth_api:auth_api@postgres:5432/auth_api}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-auth_api}
+      POSTGRES_USER: ${POSTGRES_USER:-auth_api}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-auth_api}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres_data:
+  redis_data:

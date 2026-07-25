@@ -1,0 +1,67 @@
+# Dependências
+node_modules/
+
+# Build e caches
+dist/
+coverage/
+.cache/
+.eslintcache
+*.tsbuildinfo
+*.tgz
+
+# Testes e relatórios
+.nyc_output/
+test-results/
+junit.xml
+reports/
+
+# Variáveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs e processos
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pid
+*.pid.lock
+
+# Dados locais
+data/
+tmp/
+temp/
+.tmp/
+*.sqlite
+*.sqlite3
+
+# Editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Ferramentas locais de agentes
+.agents/
+.codex/
+skills-lock.json
+
+# Arquivos locais do Docker
+docker-data/
+.docker/

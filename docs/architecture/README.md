@@ -60,3 +60,29 @@ de negócio.
 - E2E: contratos HTTP e autorização;
 - contrato: OpenAPI;
 - migrations: subir, validar, descer quando rollback for seguro.
+
+## Persistência
+
+TypeORM gerencia conexão e migrations PostgreSQL. `synchronize` permanece desabilitado em
+todos os ambientes. Mudanças de schema exigem migration versionada com `up` e `down`.
+
+Comandos:
+
+```bash
+npm run migration:show
+npm run migration:run
+npm run migration:revert
+```
+
+Schema inicial:
+
+- `users`: identidade, credencial em hash, role e status;
+- `refresh_tokens`: somente hash do token, expiração, revogação e cadeia de rotação;
+- índice único case-insensitive para e-mail;
+- índices de consulta e foreign keys explícitas.
+
+## Fronteiras automatizadas
+
+`src/architecture.spec.ts` analisa imports TypeScript. Código interno de um módulo não pode
+importar implementação interna de outro módulo. Integração entre contextos deve ocorrer por
+contrato público ou composição no nível da aplicação.

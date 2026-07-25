@@ -28,13 +28,15 @@ testabilidade e operação reproduzível.
 - lint, testes unitários, testes E2E e build;
 - pipeline de CI com GitHub Actions;
 - documentação arquitetural e ADR.
+- persistência PostgreSQL controlada por migrations;
+- schema inicial de usuários e refresh tokens;
+- testes automatizados de fronteiras entre módulos.
 
 ### Planejado
 
 - cadastro, login e autenticação JWT;
 - refresh tokens rotativos e revogação;
 - roles e permissões;
-- persistência e migrations;
 - cache Redis;
 - integração com múltiplos providers;
 - retry, timeout, fallback e circuit breaker;
@@ -288,7 +290,7 @@ mantidos em secret manager.
 
 ### Fase 2 — Usuários e autenticação
 
-- [ ] schema e migrations;
+- [x] schema e migration inicial;
 - [ ] cadastro de usuários;
 - [ ] login;
 - [ ] access token;

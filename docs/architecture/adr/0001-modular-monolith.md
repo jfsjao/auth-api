@@ -21,23 +21,23 @@ incompatível.
 
 ### Monólito modular
 
-| Dimension | Assessment |
-|---|---|
-| Complexity | baixa |
-| Cost | baixo |
-| Scalability | horizontal por réplica |
-| Team familiarity | alta |
+| Dimension        | Assessment             |
+| ---------------- | ---------------------- |
+| Complexity       | baixa                  |
+| Cost             | baixo                  |
+| Scalability      | horizontal por réplica |
+| Team familiarity | alta                   |
 
 **Pros:** transações simples, testes e deploy baratos, refatoração rápida.  
 **Cons:** isolamento de falha limitado; disciplina necessária nas fronteiras.
 
 ### Microservices
 
-| Dimension | Assessment |
-|---|---|
-| Complexity | alta |
-| Cost | alto |
-| Scalability | independente |
+| Dimension        | Assessment     |
+| ---------------- | -------------- |
+| Complexity       | alta           |
+| Cost             | alto           |
+| Scalability      | independente   |
 | Team familiarity | não comprovada |
 
 **Pros:** escala e deploy independentes.  
@@ -59,5 +59,5 @@ se portas e ownership de dados forem respeitados.
 
 1. [x] Criar módulos e health check.
 2. [x] Criar Docker Compose e CI inicial.
-3. [ ] Implementar persistência via migrations.
-4. [ ] Criar testes automatizados de fronteiras.
+3. [x] Implementar persistência via migrations.
+4. [x] Criar testes automatizados de fronteiras.

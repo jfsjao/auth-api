@@ -1,5 +1,10 @@
 # Arquitetura inicial
 
+## Decisões
+
+- [ADR-0001: Monólito modular com fronteiras por domínio](adr/0001-modular-monolith.md)
+- [ADR-0002: Estratégia de autenticação, sessões e autorização](adr/0002-authentication-and-authorization.md)
+
 ## Premissas
 
 - produto em estágio inicial, equipe pequena;

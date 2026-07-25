@@ -46,7 +46,8 @@ describe('Module boundaries', () => {
         if (targetRelative.startsWith('..')) return [];
 
         const targetOwner = targetRelative.split(sep)[0];
-        return targetOwner !== owner
+        const importsPublicApi = targetRelative === targetOwner;
+        return targetOwner !== owner && !importsPublicApi
           ? [`${relative(sourceRoot, file)} imports ${targetRelative}`]
           : [];
       });

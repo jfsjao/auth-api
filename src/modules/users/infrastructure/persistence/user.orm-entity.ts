@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import type { UserRole } from '../../domain/user';
 
 @Entity({ name: 'users' })
 export class UserOrmEntity {
@@ -18,7 +19,7 @@ export class UserOrmEntity {
   passwordHash!: string;
 
   @Column({ type: 'varchar', length: 32, default: 'user' })
-  role!: string;
+  role!: UserRole;
 
   @Column({ name: 'is_active', type: 'boolean', default: true })
   isActive!: boolean;

@@ -14,7 +14,7 @@ import { UsersModule } from './modules/users/users.module';
       cache: true,
       expandVariables: true,
     }),
-    ...(process.env.NODE_ENV === 'test' ? [] : [DatabaseModule]),
+    ...(process.env.DATABASE_ENABLED === 'false' ? [] : [DatabaseModule]),
     HealthModule,
     AuthModule,
     UsersModule,

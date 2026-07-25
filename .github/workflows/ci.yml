@@ -29,6 +29,11 @@ jobs:
     env:
       NODE_ENV: test
       DATABASE_URL: postgresql://auth_api:auth_api@localhost:5432/auth_api_test
+      JWT_ACCESS_SECRET: ci-access-secret-with-more-than-thirty-two-bytes
+      REFRESH_TOKEN_PEPPER: ci-refresh-pepper-with-more-than-thirty-two-bytes
+      PASSWORD_HASH_MEMORY_COST: 8192
+      PASSWORD_HASH_TIME_COST: 1
+      PASSWORD_HASH_PARALLELISM: 1
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,4 +44,5 @@ jobs:
       - run: npm run migration:run
       - run: npm run migration:revert
       - run: npm run migration:run
+      - run: npm run test:integration
       - run: npm run test:ci

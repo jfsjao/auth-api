@@ -31,12 +31,13 @@ testabilidade e operação reproduzível.
 - persistência PostgreSQL controlada por migrations;
 - schema inicial de usuários e refresh tokens;
 - testes automatizados de fronteiras entre módulos.
+- cadastro, login e autenticação JWT;
+- refresh tokens opacos com rotação e detecção de reutilização;
+- logout, perfil próprio, roles e permissões;
+- erros HTTP padronizados;
 
 ### Planejado
 
-- cadastro, login e autenticação JWT;
-- refresh tokens rotativos e revogação;
-- roles e permissões;
 - cache Redis;
 - integração com múltiplos providers;
 - retry, timeout, fallback e circuit breaker;
@@ -119,6 +120,7 @@ Detalhes:
 
 - [visão arquitetural](docs/architecture/README.md);
 - [ADR-0001: monólito modular](docs/architecture/adr/0001-modular-monolith.md);
+- [ADR-0002: autenticação e autorização](docs/architecture/adr/0002-authentication-and-authorization.md);
 - [contrato OpenAPI](docs/api/openapi.yaml).
 
 ## Stack
@@ -195,6 +197,8 @@ openssl rand -base64 48
 docker compose up --build
 ```
 
+O job `migrate` aplica migrations compiladas antes de liberar a API.
+
 Serviços:
 
 - API: <http://localhost:3000>
@@ -216,10 +220,11 @@ Depois:
 
 ```bash
 npm install
+npm run migration:run
 npm run start:dev
 ```
 
-## Endpoint disponível
+## Endpoints disponíveis
 
 ### Health
 
@@ -236,6 +241,30 @@ Resposta:
 }
 ```
 
+### Autenticação
+
+```http
+POST  /api/v1/auth/register
+POST  /api/v1/auth/login
+POST  /api/v1/auth/refresh
+POST  /api/v1/auth/logout
+GET   /api/v1/auth/me
+PATCH /api/v1/auth/me
+```
+
+### Usuários administrativos
+
+```http
+GET   /api/v1/users
+GET   /api/v1/users/:id
+PATCH /api/v1/users/:id
+```
+
+Contratos completos:
+
+- [OpenAPI](docs/api/openapi.yaml);
+- [autenticação e autorização](docs/security/authentication.md).
+
 ## Qualidade
 
 ```bash
@@ -248,6 +277,9 @@ npm test
 # Testes E2E
 npm run test:e2e
 
+# Testes com PostgreSQL real
+npm run test:integration
+
 # Build
 npm run build
 
@@ -255,7 +287,8 @@ npm run build
 npm run test:ci
 ```
 
-A pipeline executa lint, testes unitários, testes E2E e build antes da integração.
+A pipeline valida migrations, integração PostgreSQL, lint, testes unitários, testes E2E e
+build.
 
 ## Segurança
 
@@ -291,12 +324,14 @@ mantidos em secret manager.
 ### Fase 2 — Usuários e autenticação
 
 - [x] schema e migration inicial;
-- [ ] cadastro de usuários;
-- [ ] login;
-- [ ] access token;
-- [ ] refresh token rotativo;
-- [ ] roles e permissões;
-- [ ] testes de autenticação e autorização.
+- [x] cadastro de usuários;
+- [x] login;
+- [x] access token;
+- [x] refresh token rotativo;
+- [x] logout e revogação;
+- [x] perfil próprio;
+- [x] roles e permissões;
+- [x] testes de autenticação e autorização.
 
 ### Fase 3 — Integrações e cache
 
